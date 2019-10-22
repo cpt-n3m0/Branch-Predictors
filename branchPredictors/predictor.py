@@ -20,24 +20,15 @@ def alwaysTaken(trace):
 
 
 
-def check(branchState, taken):
-    if (branchState == 0 and not taken):
-        return 0
-    if (branchState == 0 and taken):
-        return 1
-    if (branchState == 1 and not taken):
-        return 0
-    if (branchState == 1 and taken):
-        return 2
-    if (branchState == 2 and not taken):
-        return 1
-    if (branchState == 2 and taken):
-        return 3
-    if (branchState == 3 and not taken):
-        return 2
-    if (branchState == 3 and taken):
-        return 3
+def updateBranchState(branchState, taken):
+    if not taken :
+        branchState -= 1
+    else:
+        branchState += 1
 
+    branchState = 0 if (branchState < 0)  else  branchState
+    branchState = 3 if (branchState > 3)  else  branchState
+    return branchState
 
 def twoBit(trace):
     table = {}
@@ -60,7 +51,7 @@ def twoBit(trace):
         if predictTaken != int(gt) :
        #     print("predicted " + str(predictTaken) + " but gt was : " + str(line))
             stats["error"]  += 1
-        table[index] = check(table[index], bool(int(gt)))
+        table[index] = updateBranchState(table[index], bool(int(gt)))
 
        # if table[index] >= 2 and predictTaken:
        #     stats["error"] += 1
