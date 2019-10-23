@@ -3,8 +3,9 @@
 import sys
 
 
-TABLE_SIZE=4096
-GHR_SIZE=3
+TABLE_SIZE=512
+GHR_SIZE=8
+ADDRESS_I_SIZE = 16
 
 def alwaysTaken(trace):
     predictedTrace = []
@@ -33,7 +34,7 @@ def updateBranchState(branchState, taken):
 
 def get2bitIndex(iAddress, tableSize):
     iAddressBits = "{0:b}".format(int(iAddress))
-    leastSign = iAddressBits[-8:]
+    leastSign = iAddressBits[-ADDRESS_I_SIZE:]
     return int(leastSign, 2) % TABLE_SIZE
 
 def twoBit(trace):
@@ -66,9 +67,9 @@ def twoBit(trace):
 
 def getGShareIndex(iAddress, pattern):
     iAddressBits = "{0:b}".format(int(iAddress))
-    leastSign = iAddressBits[-8:]
+    leastSign = iAddressBits[-ADDRESS_I_SIZE:]
 
-    return int(leastSign, 2) ^  int(pattern, 2)
+    return (int(leastSign, 2) ^  int(pattern, 2)) % TABLE_SIZE
 
 def shiftRegisterLeft(register, newEntry):
     register = register[1:]
