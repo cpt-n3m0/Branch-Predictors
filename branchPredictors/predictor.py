@@ -68,7 +68,8 @@ def twoBit(trace):
 def getGShareIndex(iAddress, pattern):
     iAddressBits = "{0:b}".format(int(iAddress))
     leastSign = iAddressBits[-ADDRESS_I_SIZE:]
-
+    if(len(pattern) < len(leastSign)):
+        pattern += "0" * abs(len(leastSign) - (len(pattern)))
     return (int(leastSign, 2) ^  int(pattern, 2)) % TABLE_SIZE
 
 def shiftRegisterLeft(register, newEntry):
