@@ -3,8 +3,8 @@
 import sys
 
 
-TABLE_SIZE=512
-GHR_SIZE=8
+TABLE_SIZE= 4096
+GHR_SIZE=2
 ADDRESS_I_SIZE = 16
 
 def alwaysTaken(trace):
